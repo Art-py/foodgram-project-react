@@ -52,7 +52,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def download_shopping_cart(self, request):
         final_list = {}
         ingredients = IngredientCount.objects.filter(
-            recipe__cart__user=request.user).values_list(
+            recipe__ShoppingCart__user=request.user).values_list(
             'ingredient__name', 'ingredient__measurement_unit',
             'amount')
         for item in ingredients:
@@ -67,7 +67,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         pdfmetrics.registerFont(
             TTFont('Slimamif', 'Slimamif.ttf', 'UTF-8'))
         response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = ('attachment; '
+        response['Content-Disposition'] = ('attachment; ' 
                                            'filename="shopping_list.pdf"')
         page = canvas.Canvas(response)
         page.setFont('Slimamif', size=24)
@@ -75,7 +75,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         page.setFont('Slimamif', size=16)
         height = 750
         for i, (name, data) in enumerate(final_list.items(), 1):
-            page.drawString(75, height, (f'<{i}> {name} - {data["amount"]}, '
+            page.drawString(75, height, (f'<{i}> {name} - {data["amount"]}, ' 
                                          f'{data["measurement_unit"]}'))
             height -= 25
         page.showPage()
