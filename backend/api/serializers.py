@@ -107,15 +107,12 @@ class RecipeSerializer(serializers.ModelSerializer):
         return data
 
     def create_ingredients(self, ingredients, recipe):
-        ingredients_for_create = []
         for ingredient in ingredients:
-            ingredients_for_create.append(
-                IngredientCount(recipe=recipe,
-                                ingredient_id=ingredient.get('id'),
-                                amount=ingredient.get('amount'), ),
+            IngredientCount.objects.create(
+                recipe=recipe,
+                ingredient_id=ingredient.get('id'),
+                amount=ingredient.get('amount'),
             )
-
-        IngredientCount.objects.bulk_create(ingredients_for_create)
 
     def create(self, validated_data):
         image = validated_data.pop('image')

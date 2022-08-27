@@ -50,18 +50,20 @@ class RecipeViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'],
             permission_classes=[IsAuthenticated])
     def download_shopping_cart(self, request):
-        shopping_roster = {}
-        ingredients = IngredientCount.objects.annotate(
-            sum_product=Sum('amount')).filter(
-            recipe__ShoppingCart__user=request.user).values_list(
+        final_list = {}
+        ingredients = IngredientCount.objects.filter(
+            recipe__cart__user=request.user).values_list(
             'ingredient__name', 'ingredient__measurement_unit',
-            'sum_product')
+            'amount')
         for item in ingredients:
             name = item[0]
-            shopping_roster[name] = {
-                'measurement_unit': item[1],
-                'sum_product': item[2]
-            }
+            if name not in final_list:
+                final_list[name] = {
+                    'measurement_unit': item[1],
+                    'amount': item[2]
+                }
+            else:
+                final_list[name]['amount'] += item[2]
         pdfmetrics.registerFont(
             TTFont('Slimamif', 'Slimamif.ttf', 'UTF-8'))
         response = HttpResponse(content_type='application/pdf')
@@ -72,11 +74,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
         page.drawString(200, 800, 'Список ингредиентов')
         page.setFont('Slimamif', size=16)
         height = 750
-        for i, (name, data) in enumerate(shopping_roster.items(), 1):
-            page.drawString(75, height, (
-                f'<{i}> {name} - {data["sum_product"]}, '
-                f'{data["measurement_unit"]}'))
-
+        for i, (name, data) in enumerate(final_list.items(), 1):
+            page.drawString(75, height, (f'<{i}> {name} - {data["amount"]}, '
+                                         f'{data["measurement_unit"]}'))
             height -= 25
         page.showPage()
         page.save()
