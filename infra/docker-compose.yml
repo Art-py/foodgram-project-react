@@ -1,13 +1,5 @@
 version: '3.3'
 
-volumes:
-  static_value:
-  media_value:
-  result_build:
-  postgres_data:
-  redoc:
-
-
 services:
 
   db:
@@ -49,6 +41,13 @@ services:
       - frontend
     env_file:
       - ./.env
+
+volumes:
+  static_value:
+  media_value:
+  result_build:
+  postgres_data:
+  redoc:
 
 
 #version: '3.3'
