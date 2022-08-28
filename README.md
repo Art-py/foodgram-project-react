@@ -121,4 +121,4 @@ sudo docker-compose up -d --build
     ```
     sudo docker-compose exec backend python manage.py createsuperuser
     ```
-    - Проект будет доступен по вашему IP
+    - Проект будет доступен по адресу http://51.250.31.122
