@@ -65,7 +65,6 @@ class ShowRecipeSerializer(serializers.ModelSerializer):
     ingredients = serializers.SerializerMethodField()
     is_favorited = serializers.SerializerMethodField()
     is_in_shopping_cart = serializers.SerializerMethodField()
-    image = Base64ImageField()
 
     class Meta:
         model = Recipe
@@ -85,9 +84,6 @@ class ShowRecipeSerializer(serializers.ModelSerializer):
         return Favorite.objects.filter(recipe=obj, user=request.user).exists()
 
     def get_is_in_shopping_cart(self, obj):
-        """
-        Проверка на наличие рецепта в списке покупок.
-        """
         request = self.context.get('request')
         if not request or request.user.is_anonymous:
             return False
