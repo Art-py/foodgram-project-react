@@ -105,20 +105,11 @@ scp nginx.conf <username>@<host>:/home/<username>/nginx.conf
 sudo docker-compose up -d --build
 ```
 * После успешной сборки на сервере выполните команды (только после первого деплоя):
-    - Соберите статические файлы:
-    ```
-    sudo docker-compose exec backend python manage.py collectstatic --noinput
-    ```
-    - Примените миграции:
-    ```
-    sudo docker-compose exec backend python manage.py migrate --noinput
-    ```
-    - Загрузите ингридиенты  в базу данных (необязательно):  
-    ```
-    sudo docker-compose exec backend python manage.py fill_ingredients
-    ```
-    - Создать суперпользователя Django:
-    ```
-    sudo docker-compose exec backend python manage.py createsuperuser
-    ```
-    - Проект будет доступен по адресу http://51.250.31.122
+
+
+Создать суперпользователя Django:
+    
+```
+sudo docker-compose exec backend python manage.py createsuperuser
+```
+Проект будет доступен по адресу http://51.250.31.122
