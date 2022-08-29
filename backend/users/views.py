@@ -18,7 +18,8 @@ MESSAGE_ERROR_ME = 'Вы не можете быть подписаны на са
 class CustomUserViewSet(UserViewSet):
     pagination_class = LimitPagePagination
 
-    @action(detail=True, permission_classes=[IsAuthenticated])
+    @action(detail=True, permission_classes=[IsAuthenticated],
+            methods=['POST'], )
     def subscribe(self, request, id=None):
         user = request.user
         author = get_object_or_404(User, id=id)
