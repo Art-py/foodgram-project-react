@@ -182,42 +182,6 @@ class AddRecipeSerializer(serializers.ModelSerializer):
         return data
 
 
-# class ShowFavoriteRecipeShopListSerializer(serializers.ModelSerializer):
-#
-#     class Meta:
-#         model = Recipe
-#         fields = ('id', 'name', 'image', 'cooking_time')
-#
-#
-# class FavoriteRecipeSerializer(serializers.ModelSerializer):
-#
-#     class Meta:
-#         model = Favorite
-#         fields = ('user', 'recipe')
-#
-#     def to_representation(self, instance):
-#         request = self.context.get('request')
-#         context = {'request': request}
-#         return ShowFavoriteRecipeShopListSerializer(
-#             instance.recipe, context=context).data
-#
-#
-# class ShoppingListSerializer(serializers.ModelSerializer):
-#
-#     class Meta:
-#         model = ShoppingCart
-#         fields = ('user', 'recipe')
-#
-#     def to_representation(self, instance):
-#         recipes = ShowFavoriteRecipeShopListSerializer(
-#             instance.recipe,
-#             context={
-#                 'request': self.context.get('request')
-#             }
-#         )
-#         return recipes.data
-
-
 class FollowSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField(source='author.id')
     email = serializers.ReadOnlyField(source='author.email')

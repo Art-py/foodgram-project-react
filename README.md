@@ -51,7 +51,7 @@ python manage.py createsuperuser
 ```
 python manage.py runserver
 ```
-
+Документация проекта, будет доступна по адресу: http://localhost/api/docs
 ### Для работы с удаленным сервером (на ubuntu):
 
 * Выполните вход на свой удаленный сервер
@@ -67,7 +67,6 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-
 ```
 sudo chmod +x /usr/local/bin/docker-compose
 ```
-* Локально отредактируйте файл infra/nginx.conf и в строке server_name впишите свой IP
 * Скопируйте файлы docker-compose.yml и nginx.conf из директории infra на сервер:
 ```
 scp docker-compose.yml <username>@<host>:/home/<username>/docker-compose.yml
@@ -100,11 +99,8 @@ scp nginx.conf <username>@<host>:/home/<username>/nginx.conf
      - Сборка и публикация образа бекенда на DockerHub.
      - Автоматический деплой на удаленный сервер. 
   
-* На сервере соберите docker-compose:
-```
-sudo docker-compose up -d --build
-```
-* После успешной сборки на сервере выполните команды (только после первого деплоя):
+
+* После успешной сборки на сервере выполните команду (только после первого деплоя):
 
 
 Создать суперпользователя Django:
@@ -112,4 +108,4 @@ sudo docker-compose up -d --build
 ```
 sudo docker-compose exec backend python manage.py createsuperuser
 ```
-Проект будет доступен по адресу http://51.250.31.122
+Текущий проект будет доступен по адресу http://51.250.31.122
