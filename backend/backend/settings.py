@@ -9,9 +9,9 @@ sys.path.insert(0, os.path.join(BASE_DIR))
 
 SECRET_KEY = os.getenv('TOKEN', default='321123321123321132')
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*', 'localhost', ]
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
